@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+</head>
+<body>
+    
+    <input type="text" name="id_menu" id="id_menu">
+    <input type="text" name="catatan" id="catatan">
+    <input type="text" name="kuantitas" id="kuantitas">
+    <input type="submit" value="submit" id="submit">
+    
+
+
+    <script>
+    $(document).on('click', '#submit', function () {
+        var id_menu=$('#id_menu').val();
+            var kuantitas=$('#kuantitas').val();
+            var catatan=$('#catatan').val();
+            console.log(kuantitas);
+            console.log(id_menu);
+            console.log(catatan);
+            $.ajax({
+                type: "post",
+                data:  {"id_menu": id_menu,"kuantitas":kuantitas,"catatan":catatan} ,
+                url: "http://localhost/foodCashier/index.php/C_Cart/addItem",
+                beforeSend: function () {
+
+                },
+                success: function (dataObjects) {
+                    console.log(dataObjects);
+                    $.ajax({
+                type: "post",
+                data:  {} ,
+                url: "http://localhost/foodCashier/index.php/C_Cart/getAllItem",
+                beforeSend: function () {
+
+                },
+                success: function (dataObjects) {
+                    console.log(dataObjects);
+                },
+                complete: function () {
+
+                }
+            });
+                },
+                complete: function () {
+
+                }
+            });
+    });
+    </script>
+</body>
+
+</html>
