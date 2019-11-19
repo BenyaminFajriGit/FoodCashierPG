@@ -1,0 +1,7 @@
+#gitignore punya Adji, isinya build cordova CLI di laptopku wkwk
+install&push.bat
+node_modules/
+package-lock.json
+package.json
+platforms/android/
+plugins/android.json
