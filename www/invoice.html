@@ -1,18 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Invoice</title>
-        <script src="assets/js/jquery.js"></script>
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-        
-        
-        
-    </head>
-    <body>
-        <div class="alert alert-danger">test</div>
-        
-        
-        
-    </body>
+
+<head>
+    <title>Invoice</title>
+    <script src="assets/js/jquery.js"></script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+
+
+</head>
+
+<body>
+    <div class="alert alert-danger">test</div>
+    <script>
+        let id_invoice = 81; //TBD, nanti ambil data yang di-pass dari file cart.html
+        $(window).load('pageinit', '', function () {
+            $.ajax({
+                url: `http://frozenbits.tech/foodCashier/C_Transact/showDetailInvoice/${id_invoice}`,
+                type: 'get',
+                beforesend: function () {
+                    
+                },
+                success: function (dataObject) {
+                    console.log(dataObject);
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+                complete: function () {
+                    
+                }
+            })
+        })
+    </script>
+
+
+</body>
+
 </html>
