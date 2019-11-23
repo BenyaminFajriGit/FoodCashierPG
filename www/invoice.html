@@ -2,38 +2,53 @@
 <html>
 
 <head>
-    <title>Invoice</title>
-    <script src="assets/js/jquery.js"></script>
+    <title>Checkout</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="assets/js/jquery.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/self-js/invoice.js"></script>
 
 
 
 </head>
 
-<body>
-    <div class="alert alert-danger">test</div>
-    <script>
-        let id_invoice = 81; //TBD, nanti ambil data yang di-pass dari file cart.html
-        $(window).load('pageinit', '', function () {
-            $.ajax({
-                url: `http://frozenbits.tech/foodCashier/C_Transact/showDetailInvoice/${id_invoice}`,
-                type: 'get',
-                beforesend: function () {
-                    
-                },
-                success: function (dataObject) {
-                    console.log(dataObject);
-                },
-                error: function (err) {
-                    console.log(err);
-                },
-                complete: function () {
-                    
-                }
-            })
-        })
-    </script>
+<body class="bg-secondary">
+    <div id="navbar">
+        <script>
+            $("#navbar").load("partial/navbar.html");
+        </script>
+    </div>
+
+    <div class="container-fluid">
+        <h4 class="mt-2">Checkout</h4>
+        <div id="invoiceData" class="card col-12 mb-2 bg-light"></div>
+        <div id="invoiceDetails"></div>
+        <div id="invoicePayment" class="card col-12 mb-2 bg-light"></div>
+        <div class="col-12 mb-2">
+            <div class="row">
+                <a role="button" class="col-6 btn bg-dark text-light btn-lg" href="cart.html">Ubah Pesanan</a>
+                <button id="buttonBayar" type="button" class="d-block col-6 btn bg-light btn-lg">Bayar</button>
+            </div>
+        </div>
+        <form>
+            <div class="form-group">
+                <label for="paymentInput"><h4>Jumlah yang dibayarkan:</h4></label>
+                <input type="number" class="form-control" id="paymentInput">
+            </div>
+            <div class="form-group">
+                    <label for="paymentInput"><h4>Kembalian:</h4></label>
+                    <div class="card bg-light">
+                        <div class="text-right p-1">Rp<span id="jumlahUang">200</span></div>
+                    </div>
+                </div>
+            <div class="form-group">
+                    <button id="buttonSelesai" type="button" class="d-block col-12 btn bg-light btn-lg">Selesaikan Pesanan</button>
+            </div>
+        </form>
+    </div>
 
 
 </body>
