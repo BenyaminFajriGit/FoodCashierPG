@@ -30,22 +30,22 @@
         <div class="col-12 mb-2">
             <div class="row">
                 <a role="button" class="col-6 btn bg-dark text-light btn-lg" href="cart.html">Ubah Pesanan</a>
-                <button id="buttonBayar" type="button" class="d-block col-6 btn bg-light btn-lg">Bayar</button>
+                <button id="buttonBayar" type="button" class="col-6 btn bg-light btn-lg">Bayar</button>
             </div>
         </div>
-        <form>
+        <form id="hitungBayar" class="d-none">
             <div class="form-group">
                 <label for="paymentInput"><h4>Jumlah yang dibayarkan:</h4></label>
                 <input type="number" class="form-control" id="paymentInput">
             </div>
             <div class="form-group">
-                    <label for="paymentInput"><h4>Kembalian:</h4></label>
+                    <label for="jumlahUangKembalian"><h4>Kembalian:</h4></label>
                     <div class="card bg-light">
-                        <div class="text-right p-1">Rp<span id="jumlahUang">200</span></div>
+                        <div class="text-right p-1">Rp<span id="jumlahUangKembalian"></span></div>
                     </div>
                 </div>
             <div class="form-group">
-                    <button id="buttonSelesai" type="button" class="d-block col-12 btn bg-light btn-lg">Selesaikan Pesanan</button>
+                    <a id="buttonSelesai" type="button" class="d-block col-12 btn bg-light btn-lg">Selesaikan Pesanan</a>
             </div>
         </form>
     </div>

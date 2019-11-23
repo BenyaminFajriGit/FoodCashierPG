@@ -22,7 +22,7 @@ let InvoiceUtils = {
                 },
                 success: function (dataObject) {
                     console.log(dataObject);
-                    
+
                     let col_length = 5; //set col-length according to your need
 
                     //set the invoice identifier data
@@ -55,22 +55,22 @@ let InvoiceUtils = {
                                 <div class="row">
                                     <div class="col-${col_length}">Kuantitas</div>
                                     <div class="mr-1">:</div>
-                                    <div id="invoiceID">${dataElement.kuantitas}</div>
+                                    <div>${dataElement.kuantitas}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-${col_length}">Harga Satuan</div>
                                     <div class="mr-1">:</div>
-                                    <div id="invoiceID">Rp${dataElement.harga}</div>
+                                    Rp<div>${dataElement.harga}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-${col_length}">Subtotal</div>
                                     <div class="mr-1">:</div>
-                                    <div id="invoiceID">Rp${dataElement.subtotal}</div>
+                                    Rp<div id="invoiceID">${dataElement.subtotal}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-${col_length}">Catatan</div>
                                     <div class="mr-1">:</div>
-                                    <div id="invoiceID">${dataElement.catatan}</div>
+                                    Rp<div>${dataElement.catatan}</div>
                                 </div>
                             </div>
                         </div>
@@ -83,17 +83,17 @@ let InvoiceUtils = {
                         <p><div class="row">
                             <div class="col-${col_length}">Subtotal</div>
                             <div class="mr-1">:</div>
-                            <div id="invoiceName">Rp${dataObject.invoice.total}</div>
+                            Rp<div id="subtotal">${dataObject.invoice.total}</div>
                         </div>
                         <div class="row">
                             <div class="col-${col_length}">Potongan Harga</div>
                             <div class="mr-1">:</div>
-                            <div id="invoiceID">Rp${dataObject.invoice.potongan}</div>
+                            Rp<div id="potonganHarga">${dataObject.invoice.potongan}</div>
                         </div>
                         <div class="row">
                             <div class="col-${col_length}">Harga Total</div>
                             <div class="mr-1">:</div>
-                            <div id="invoiceDate">Rp${dataObject.invoice.setelah_potongan}</div>
+                            Rp<div id="hargaTotal">${dataObject.invoice.setelah_potongan}</div>
                     </div></p>
                     `;
                     $("#invoicePayment").append(payment_placeholder);
@@ -119,7 +119,29 @@ if (location.search != "") {
 
     InvoiceUtils.getObjects(id_invoice); //execute data pulling from API
 
-    $(document).on("click", "#buttonBayar", function(){
-        console.log("BAYARBAYARBAYAR")
+    $(document).on("click", "#buttonBayar", function () {
+        $("#hitungBayar").fadeIn().attr("class", "d-block")
+        $("#buttonBayar").fadeOut() //attr("class","d-none")
+    })
+    $(document).ready(function () {
+        $("#hitungBayar").trigger("reset");
+        let kembalian;
+        $("#paymentInput").on("input", function () {
+            let paymentInput = parseInt($("#paymentInput").val());
+            let hargaTotal = parseInt($("#hargaTotal").text());
+            kembalian = paymentInput - hargaTotal;
+            $("#jumlahUangKembalian").text(kembalian);
+        })
+        $("#paymentInput").on("change", function () {
+            if (kembalian < 0) {
+                $("#buttonSelesai").removeAttr("href");
+                $("#buttonSelesai").off("click").on("click", function () {
+                    alert("Uang yang dibayarkan masih kurang!");
+                })
+            } else {
+                $("#buttonSelesai").attr("href", "index.html");
+                $("#buttonSelesai").off("click")
+            }
+        })
     })
 }
