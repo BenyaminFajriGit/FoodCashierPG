@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Invoice</title>
-        <script src="assets/js/jquery.js"></script>
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-        
-        
-        
-    </head>
-    <body>
-        <div class="alert alert-danger">test</div>
-        
-        
-        
-    </body>
+
+<head>
+    <title>Checkout</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/self-js/invoice.js"></script>
+
+
+
+</head>
+
+<body class="bg-secondary">
+    <div id="navbar">
+        <script>
+            $("#navbar").load("partial/navbar.html");
+        </script>
+    </div>
+
+    <div class="container-fluid">
+        <h4 class="mt-2">Invoice</h4>
+        <div id="invoiceData" class="card col-12 mb-2 bg-light"></div>
+        <div id="invoiceDetails"></div>
+        <div id="invoicePayment" class="card col-12 mb-2 bg-light"></div>
+    </div>
+
+
+</body>
+
 </html>

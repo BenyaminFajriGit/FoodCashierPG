@@ -5,3 +5,4 @@ package-lock.json
 package.json
 platforms/android/
 plugins/android.json
+git\ pull.bat
