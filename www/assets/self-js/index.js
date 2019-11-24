@@ -1,70 +1,4 @@
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <title>Document</title>
-</head>
-
-<body class="bg-secondary">
-<div id="navbar">
-    
-</div>
-
-    <div class="container-fluid">
-        <div id="listmenu">
-            <input id="search" class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
-        </div>
-
-    </div>
-
- 
-
-    </div>
-    <!--modal-->
-    <div class="modal fade row" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered d-flex justify-content-center col-12" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <div class="form-group">
-                        <label for="kuantitas">Qty : </label>
-                        <button id="minus" class="btn btn-primary">-</button>
-                        <input type="number" name="kuantitas" id="kuantitas" min="0" max="100" value="1"
-                            class="text-center">
-                        <button id="add" class="btn btn-primary">+</button><br>
-                        <label for="Catatan">Catatan : </label>
-                        <input type="text" name="catatan" id="catatan" value="-" class="text-center">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button id="addCart" type="button" class="btn btn-primary">Add To Cart</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--end modal-->
-
-    <script type="text/javascript" src="cordova.js"></script>
-    <script>
-    $(function(){
-      $("#navbar").load("partial/navbar.html"); 
-    });
-        </script>
-    <script>
-    var id_menu_clicked = 0;
+var id_menu_clicked = 0;
 $(document).ready(function () {
     $.ajax({
         type: "get",
@@ -130,15 +64,10 @@ $(document).ready(function () {
             },
             success: function (dataObjects) {
                 console.log(dataObjects);
-                if(dataObjects.status==false){
-                    alert(dataObjects.error_message);
-                }else{
+               alert('s');
                 $('#catatan').val('-');
                 $('#kuantitas').val(1);
                 $('#exampleModalCenter').modal('hide');
-                }
-                
-                
             },
             complete: function () {
 
@@ -147,15 +76,55 @@ $(document).ready(function () {
 
     });
 
-   
+    $(document).on('click', '#getCart', function () {
+        $.ajax({
+            type: "get",
+            url: "http://frozenbits.tech/foodCashier/index.php/C_Cart/getAllItem",
+            beforeSend: function () {
+
+            },
+            success: function (dataObjects) {
+                console.log(dataObjects.result);
+                $('#cart').html('');
+                Object.entries(dataObjects.result).forEach(([key, dataObject]) => {
+                    var appendList =
+                        `
+                    <div class="row m-2">
+                        <div class="card col-12" style="width: 18rem;">
+                            <div class="card-body">
+                                <p class="card-text">`+ dataObject.rowid + `</p>
+                                <h5 class="card-title">`+ dataObject.id + `</h5>
+                                <p class="card-text">`+ dataObject.name + `</p>
+                                <p class="card-text">`+ dataObject.qty + `</p>
+                                <p class="card-text">`+ dataObject.price + `</p>
+                                <p class="card-text">`+ dataObject.subtotal + `</p>
+                                <p class="card-text">`+ dataObject.options.note + `</p>
+                                
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    `;
+
+                    $('#cart').append(appendList);
+                });
+
+
+
+            },
+            complete: function () {
+
+            }
+        });
+
+    });
 
     $(document).on('click', '#add', function () {
         var kuantitas = $('#kuantitas').val();
         kuantitas = parseInt(kuantitas);
         if (kuantitas < 100) {
             $('#kuantitas').val(++kuantitas);
-        }else{
-            alert("maximum kuantitas = 100");
         }
 
     });
@@ -175,7 +144,3 @@ $(document).ready(function () {
         });
     });
 });
-    </script>
-</body>
-
-</html>
