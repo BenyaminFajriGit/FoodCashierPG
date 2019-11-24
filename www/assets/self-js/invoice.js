@@ -70,7 +70,7 @@ let InvoiceUtils = {
                                 <div class="row">
                                     <div class="col-${col_length}">Catatan</div>
                                     <div class="mr-1">:</div>
-                                    Rp<div>${dataElement.catatan}</div>
+                                    <div>${dataElement.catatan}</div>
                                 </div>
                             </div>
                         </div>
