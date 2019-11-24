@@ -1,0 +1,49 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body class="bg-secondary">
+<div id="navbar">
+    
+</div>
+
+    <div class="container-fluid">
+        <div id="listcart">
+                <h5>ISI CART</h5>
+            <input id="search" class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
+        </div>
+        <div class="bg-light text-dark m-2 p-2">
+            <h5 id="total" >Total: <span class="float-right"></span></h5>
+            <h6 id="getPoin">Poin yang didapatkan jika menggunakan kartu member: <span></span> poin</h6>
+        </div>
+
+        <form class="text-light">
+            <div class="form-group">
+              <label for="username">ID pelanggan</label>
+              <input type="text" class="form-control" id="username"  placeholder="ID Pelanggan">
+              <small  class="form-text text-muted">boleh tidak diisi</small>
+              <button type="button" class="btn btn-success" id="checkout" >Checkout</button>
+            </div>
+            </form>
+    </div>
+
+    
+    <script type="text/javascript" src="cordova.js"></script>
+    <script>
+    $(function(){
+      $("#navbar").load("partial/navbar.html"); 
+    });
+        </script>
+   <script src="assets/self-js/cart.js"></script>
+</body>
+
+</html>
