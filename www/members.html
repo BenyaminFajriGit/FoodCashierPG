@@ -1,0 +1,228 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <title>Members</title>
+</head>
+
+<body class="bg-secondary">
+<div id="navbar">
+    
+</div>
+
+    <div class="container-fluid">
+        <input id="search" class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
+
+        <h5>LIST MEMBERS</h5>
+        <button onclick="cleanForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-form"> Add Member </button>
+        <div id="listmember">
+    </div>
+
+    </div>
+
+    <!--modal ADD/UPDATE-->
+    <div class="modal fade row" id="modal-form" tabindex="-1" role="dialog"
+        aria-labelledby="modal-detailTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered d-flex justify-content-center col-12" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Edit Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="form-group">
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="form-username">Username</label>
+                                <input class="form-control" type="text" id="form-username" placeholder="Username">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="form-nama">Nama</label>
+                                <input class="form-control" type="text" id="form-nama" placeholder="Nama">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="form-no_hp">No HP</label>
+                                <input class="form-control" type="text" id="form-no_hp" placeholder="No Hp">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-submit" type="button" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end modal-->
+
+    <!--modal DETAIL-->
+    <div class="modal fade row" id="modal-detail" tabindex="-1" role="dialog"
+        aria-labelledby="modal-detailTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered d-flex justify-content-center col-12" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Detail Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="form-group">
+                        <p id="detail-username">Username</p>
+                        <p id="detail-nama">Nama</p>
+                        <p id="detail-no_hp">No Hp</p>
+                        <p id="detail-jml_point">Jumlah Point</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end modal-->
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script>
+    $(function(){
+      $("#navbar").load("partial/navbar.html"); 
+    });
+
+    $(document).ready(function () {
+        //get all data members
+        $.ajax({
+            type: "get",
+            url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/getPelanggan",
+            beforeSend: function () {
+            },
+            success: function (dataObjects) {
+                const {status, result} = dataObjects;
+                
+                if(status){
+                    result.forEach(data => {
+                        var appendList =
+                            `
+                            <div class="row m-2 ">
+                                <div class="card col-12 bg-dark text-light" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">`+ data.username_pelanggan + `</h5>
+                                        <p class="card-text">Nama: `+ data.nama + `</p>
+                                        <button onclick="detail('` + data.username_pelanggan + `', true)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-form"> Edit </button>
+                                        <button onclick="detail('` + data.username_pelanggan + `')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-detail"> Detail </button>
+                                        <button type="button" class="btn btn-danger" > Delete </button>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+
+                        $('#listmember').append(appendList);
+                    });
+                }
+
+            }
+        });
+
+    });
+
+    function detail(username, edit = false)
+    {
+        $.ajax({
+            type: "get",
+            url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/getPelanggan/" + username,
+            beforeSend: function () {
+            },
+            success: function (dataObjects) {
+                const {status, result} = dataObjects;
+                if(status)
+                {
+                    if(edit)
+                    {
+                        $('#form-username').val(result.username_pelanggan);
+                        $('#form-username').attr('disabled', true);
+                        $('#form-nama').val(result.nama);
+                        $('#form-no_hp').val(result.no_hp);
+                        $('#btn-submit').attr('onclick', 'submit(true)');
+                        $('#btn-submit').text('Update')
+                    }else{
+                        $('#detail-username').text('Usename : ' + result.username_pelanggan);
+                        $('#detail-nama').text('Nama : ' + result.nama);
+                        $('#detail-no_hp').text('No HP : ' + result.no_hp);
+                        $('#detail-jml_point').text('Jumlah Point : ' + result.jml_point);
+                    }
+                }
+            }
+        });
+    }
+
+    function cleanForm()
+    {
+        $('#form-username').val('');
+        $('#form-username').attr('disabled', false);
+        $('#form-nama').val('');
+        $('#form-no_hp').val('');
+        $('#btn-submit').text('Save')
+        $('#btn-submit').attr('onclick', 'submit()');
+    }
+
+    function submit(edit = false)
+    {
+        const username_pelanggan = $('#form-username').val();
+        const nama = $('#form-nama').val();
+        const no_hp = $('#form-no_hp').val();
+
+        if(edit){
+            $.ajax({
+                type: "post",
+                url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/actions/update_pelanggan/"+username_pelanggan,
+                data: {
+                    nama,
+                    no_hp
+                },
+                beforeSend: function () {
+                },
+                success: function (status) {
+                    if(status)
+                    {
+                        alert('Data berhasil diubah!');
+                        window.location.reload();
+                    }
+                }
+            });
+        }else{
+            $.ajax({
+                type: "post",
+                url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/actions/add_pelanggan",
+                data: {
+                    username_pelanggan,
+                    nama,
+                    no_hp
+                },
+                beforeSend: function () {
+                },
+                success: function (status) {
+                    if(status)
+                    {
+                        alert('Data berhasil ditambahkan!');
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    }
+    </script>
+</body>
+
+</html>
