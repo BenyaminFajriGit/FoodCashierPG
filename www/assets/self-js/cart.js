@@ -1,4 +1,3 @@
-var id_menu_clicked = 0;
 $(document).ready(function () {
     $.ajax({
             type: "get",
@@ -15,13 +14,11 @@ $(document).ready(function () {
                         <div class="card col-12 bg-dark text-light" style="width: 18rem;">
                             <div class="card-body" >
                                 <h5 class="card-title">`+ dataObject.name + `</h5>
-                                <p class="card-text">ID Menu: `+ dataObject.id + `</p>
                                 <p class="card-text">Kuantitas: `+ dataObject.qty + `</p>
                                 <p class="card-text">Harga: `+ dataObject.price + `</p>
                                 <p class="card-text">Subtotal: `+ dataObject.subtotal + `</p>
                                 <p class="card-text">Catatan: `+ dataObject.options.note + `</p>
-                                
-                                
+                                <button class="btn btn-danger" id="hapus" data-rowid=`+dataObject.rowid+`>Hapus</button>
                                 
                             </div>
                         </div>
@@ -42,36 +39,76 @@ $(document).ready(function () {
         });
 
 
-    $(document).on('click', '#menu', function () {
-        var title = $(this).siblings('h5').text();
-        $('#modalTitle').text(title);
-        id_menu_clicked = $(this).data('idmenu');
 
+    
+    $(document).on('click', '#hapus', function () {
+        var rowid = $(this).data('rowid');
+        console.log(rowid);
+        
+        $.ajax({
+            type: "get",
+            url: "http://frozenbits.tech/foodCashier/index.php/C_Cart/delete_cart_item/"+rowid,
+            beforeSend: function () {
 
+            },
+            success: function (dataObjects) {
+                if(dataObjects.status==true)
+                location.reload();
+               
 
+            },
+            complete: function () {
+
+            }
+        });
     });
 
+    $(document).on('click', '#checkout', function () {
+        var username = $('#username').val();
+        var is_member=false;
+        if(username){
+            $.ajax({
+            type: "get",
+            url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/getPelanggan/"+username,
+            beforeSend: function () {
 
-    $(document).on('click', '#getCart', function () {
-       
+            },
+            success: function (dataObjects) {
+                if(dataObjects.status==true)
+                is_member=true;
+               
 
-    });
+            },
+            complete: function () {
 
-    $(document).on('click', '#add', function () {
-        var kuantitas = $('#kuantitas').val();
-        kuantitas = parseInt(kuantitas);
-        if (kuantitas < 100) {
-            $('#kuantitas').val(++kuantitas);
+            }
+        });
+        
+        }else{
+            username="";
         }
+        $.ajax({
+            type: "post",
+            url: "http://frozenbits.tech/foodCashier/index.php/C_Transact/checkout/",
+            data: {username_pelanggan:username,username_staff:'benz'},
+            beforeSend: function () {
 
-    });
-    $(document).on('click', '#minus', function () {
-        var kuantitas = $('#kuantitas').val();
-        kuantitas = parseInt(kuantitas);
-        if (kuantitas > 0) {
-            $('#kuantitas').val(--kuantitas);
-        }
+            },
+            success: function (dataObjects) {
+                console.log(dataObjects);
+                if(dataObjects.status==true)
+                window.location.href = "invoice.html?id_invoice="+dataObjects.id_invoice;
+                else{
+                    alert(dataObjects.message);
+                }
+               
 
+            },
+            complete: function () {
+
+            }
+        });
+        
     });
 
     $("#search").on("keyup", function () {
