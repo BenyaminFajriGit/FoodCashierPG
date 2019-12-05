@@ -8,10 +8,10 @@ $(document).ready(function () {
         type: "get",
         url: "http://frozenbits.tech/foodCashier/index.php/C_Menu/getAllMenu",
         beforeSend: function () {
-            console.log("dsadcsads"); //hapus
+            //console.log("dsadcsads"); //hapus
         },
         success: function (dataObjects) {
-            console.log("dsadwdcsads"); //hapus
+            //console.log("dsadwdcsads"); //hapus
             dataObjects['result'].forEach(dataObject => {
                 var appendList =
                     `
@@ -23,13 +23,13 @@ $(document).ready(function () {
                                 <p class="card-text">Kategori: `+ dataObject.kategori + `</p>
                                 <p class="card-text">Stok: `+ dataObject.stok + `</p>
                                                              
-                                <button onclick="modalChangeAttribute(`+dataObject.id_menu+`)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#form-update"> 
+                                <button onclick="modalChangeAttribute(${dataObject.id_menu},'${dataObject.nama}',${dataObject.harga},'${dataObject.kategori}',${dataObject.stok})" type="button" class="btn btn-warning" data-toggle="modal" data-target="#form-update"> 
                                 Update </button> <!--//button buat tombol update-->
                                                                 
-                                <button onclick="detail('`+ dataObject.id_menu + `')" type="button" class="btn btn-warning" data-toggle="modal" data-target="#menu-detail"> 
+                                <button onclick="detail('`+ dataObject.id_menu + `')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#menu-detail"> 
                                 Detail </button>
                                 
-                                <button onclick="delMenu('`+ dataObject.id_menu + `')" type="button" class="btn btn-warning"> 
+                                <button onclick="delMenu('`+ dataObject.id_menu + `')" type="button" class="btn btn-danger"> 
                                 Delete </button>
                             </div>
                         </div>
@@ -38,7 +38,7 @@ $(document).ready(function () {
                 $('#listmenu').append(appendList);
 
             });
-            console.log("fe2q3"); //hapus
+            //console.log("fe2q3");
         },
 
         complete: function () {
@@ -46,8 +46,12 @@ $(document).ready(function () {
         }
     });
 });
-function modalChangeAttribute(id_menu){
+function modalChangeAttribute(id_menu,nama,harga,kategori,kuantitas){
     $('#btn-submit-update').attr("onclick","update("+id_menu+")")
+    $('#form-nama-update').val(nama)
+    $('#form-harga-update').val(harga)
+    $('#form-kategori-update').val(kategori)
+    $('#form-kuantitas-update').val(kuantitas)
 }
 function detail(id_menu) {
     $.ajax({
@@ -77,14 +81,14 @@ function update(id_menu) {
         data: { "id_menu": id_menu, "nama": nama, "harga": harga, "kategori": kategori, "stok": stok },
         url: "http://frozenbits.tech/foodCashier/index.php/C_Menu/updateMenu/",
         beforeSend: function () {
-            console.log("VARSLCT "+id_menu)
+            //console.log("VARSLCT "+id_menu)
         },
         success: function (dataObjects) {
             console.log(dataObjects)
             $('#form-nama-update').val("");
-            $('#form-nama-update').val(dataObjects.nama); //apa mending di-disable terus dimunculin nama menu yg mau diupdate?
+            $('#form-nama-update').val(dataObjects.nama); 
             $('#form-harga-update').val();
-            $('#form-kategori-update').val(dataObjects.kategori); //sama
+            $('#form-kategori-update').val(dataObjects.kategori);
             $('#form-kuantitas-update').val();
             window.location.reload(false)
         }
@@ -97,11 +101,11 @@ function tambah() {
     var harga = $('#form-harga-tambah').val();
     var kategori = $('#inputGroupTambah').val();
     var stok = $('#form-kuantitas-tambah').val();
-    console.log(nama + "" + harga)
+    //console.log(nama + "" + harga)
     $.ajax({
         type: "post",
         data: { "nama": nama, "harga": harga, "kategori": kategori, "stok": stok },
-        url: "http://frozenbits.tech/foodCashier/index.php/C_Menu/addMenu/", //apa kurang + id_menu ?
+        url: "http://frozenbits.tech/foodCashier/index.php/C_Menu/addMenu/", 
         beforeSend: function () {
         },
         success: function (dataObjects) {
@@ -109,7 +113,7 @@ function tambah() {
             if (dataObjects.status == false) {
                 alert(dataObjects.error_message);
             } else {
-                console.log("1wrdawf"); //hapus
+                //console.log("1wrdawf"); //hapus
                 $('#form-nama-tambah').val();
                 $('#form-harga-tambah').val();
                 $('#inputGroupTambah').val();
@@ -122,7 +126,7 @@ function tambah() {
 }
 
 function delMenu(id_menu) {
-    console.log("dsadads"); //hapus
+//    console.log("dsadads"); //hapus
     $.ajax({
         type: "post",
         url: "http://frozenbits.tech/foodCashier/index.php/C_Menu/deleteMenu/" + id_menu,
@@ -146,3 +150,4 @@ $("#search").on("keyup", function () {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
+
