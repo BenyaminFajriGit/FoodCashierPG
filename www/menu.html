@@ -1,0 +1,185 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <title>Menu</title>
+</head>
+
+<body class="bg-secondary">
+    <div id="navbar">
+
+    </div>
+
+    <div class="container-fluid">
+        <input id="search" class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
+
+        <h5> DAFTAR MENU</h5>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#form-tambah"> Tambahkan
+            Menu</button>
+        <div id="listmenu">
+        </div>
+    </div>
+
+
+    <div class="modal fade row" id="form-update" tabindex="-1" role="dialog" aria-labelledby="form-update"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered d-flex justify-content-center col-12" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Update Menu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="form-group">
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="nama-menu">Nama Menu : </label>
+                                <input class="form-control" type="text" id="form-nama-update" placeholder="Nama Menu">
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="harga">Harga : </label>
+                                <label>Rp.</label>
+                                <input type="number" name="harga" id="form-harga-update" min="0" max="100000"
+                                    value="00000" class="text-center"><br>
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="kuantitas">Qty : </label>
+                                <button id="minus" class="btn btn-primary">-</button>
+                                <input type="number" name="kuantitas" id="form-kuantitas-update" min="0" max="100"
+                                    value="1" class="text-center">
+                                <button id="add" class="btn btn-primary">+</button><br>
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="Kategori">Kategori : </label>
+                                <input class="form-control" type="text" id="form-kategori-update"
+                                    placeholder="Nama Menu">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="btn-submit-update" type="button"
+                        class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end modal-->
+
+    <!--modal DETAIL-->
+    <div class="modal fade row" id="menu-detail" tabindex="-1" role="dialog" aria-labelledby="menu-detailTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered d-flex justify-content-center col-12" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Detail Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="form-group">
+                        <p id="detail-nama">Nama Menu</p>
+                        <p id="detail-harga">Harga</p>
+                        <p id="detail-kategori">Kategori</p>
+                        <p id="detail-stock">Stock</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade row" id="form-tambah" tabindex="-1" role="dialog" aria-labelledby="form-tambah"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered d-flex justify-content-center col-12" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Tambah Menu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="form-group">
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="nama-menu">Nama Menu : </label>
+                                <input class="form-control" type="text" id="form-nama-tambah" placeholder="Nama Menu">
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="harga">Harga : </label>
+                                <label>Rp.</label>
+                                <input type="number" name="harga" id="form-harga-tambah" min="0" max="100000"
+                                    value="000" class="text-center"><br>
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="kuantitas">Qty : </label>
+                                <input type="number" name="kuantitas" id="form-kuantitas-tambah" min="0" max="100"
+                                    value="1" class="text-center">
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-8 offset-2 text-left">
+                                <label for="Kategori">Kategori : </label>
+                                <select class="custom-select" id="inputGroupTambah">
+                                    <option selected>Pilih...</option>
+                                    <option value="makanan">Makanan</option>
+                                    <option value="minuman">Minuman</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button onclick="tambah()" id="btn-submit-tambah" type="button" class="btn btn-primary"
+                        data-dismiss="modal">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end modal-->
+
+    <!-- <script type="text/javascript" src="cordova.js"></script> -->
+    <script>
+        $(function () {
+            $("#navbar").load("partial/navbar.html");
+        });
+    </script>
+
+    <script src="assets/self-js/menu.js"></script>
+
+</body>
+
+</html>

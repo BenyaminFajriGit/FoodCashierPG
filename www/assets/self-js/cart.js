@@ -97,7 +97,7 @@ $(document).ready(function () {
             success: function (dataObjects) {
                 console.log(dataObjects);
                 if(dataObjects.status==true)
-                window.location.href = "invoice.html?id_invoice="+dataObjects.id_invoice;
+                window.location.href = "checkout.html?id_invoice="+dataObjects.id_invoice;
                 else{
                     alert(dataObjects.message);
                 }
