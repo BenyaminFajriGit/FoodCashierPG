@@ -142,19 +142,23 @@ $(function(){
 
   function delUser(username)
   {
-    $.ajax({
-        type: "post",
-        url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/actions/delete_pelanggan/"+username,
-        beforeSend: function () {
-        },
-        success: function (status) {
-            if(status)
-            {
-                alert('Data berhasil dihapus!');
-                window.location.reload();
+      const c = confirm('Are you sure want to delete the data ?');
+      if(c)
+      {
+        $.ajax({
+            type: "post",
+            url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/actions/delete_pelanggan/"+username,
+            beforeSend: function () {
+            },
+            success: function (status) {
+                if(status)
+                {
+                    alert('Data berhasil dihapus!');
+                    window.location.reload();
+                }
             }
-        }
-    });
+        });
+      }
   }
 
 $("#search").on("keyup", function () {
