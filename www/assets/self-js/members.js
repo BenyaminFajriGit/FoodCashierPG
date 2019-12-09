@@ -40,6 +40,7 @@ $(function(){
 
   function detail(username, edit = false)
   {
+      cleanForm(true);
       $.ajax({
           type: "get",
           url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/getPelanggan/" + username,
@@ -68,8 +69,15 @@ $(function(){
       });
   }
 
-  function cleanForm()
+  function cleanForm(edit=false)
   {
+      if(edit)
+      {
+        $('#modalTitle').text('Edit Data');
+      }else{
+        $('#modalTitle').text('Add Data');
+      }
+
       $('#form-username').val('');
       $('#form-username').attr('disabled', false);
       $('#form-nama').val('');
