@@ -91,45 +91,53 @@ $(function(){
       const username_pelanggan = $('#form-username').val();
       const nama = $('#form-nama').val();
       const no_hp = $('#form-no_hp').val();
-
-      if(edit){
-          $.ajax({
-              type: "post",
-              url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/actions/update_pelanggan/"+username_pelanggan,
-              data: {
-                  nama,
-                  no_hp
-              },
-              beforeSend: function () {
-              },
-              success: function (status) {
-                  if(status)
-                  {
-                      alert('Data berhasil diubah!');
-                      window.location.reload();
-                  }
-              }
-          });
+      if(username_pelanggan.length == 0 || nama.length == 0 || no_hp.length == 0){
+        alert('Filed is empty!');
       }else{
-          $.ajax({
-              type: "post",
-              url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/actions/add_pelanggan",
-              data: {
-                  username_pelanggan,
-                  nama,
-                  no_hp
-              },
-              beforeSend: function () {
-              },
-              success: function (status) {
-                  if(status)
-                  {
-                      alert('Data berhasil ditambahkan!');
-                      window.location.reload();
-                  }
-              }
-          });
-      }
+        if(isNaN(no_hp))
+        {
+            alert('No Hp must in Number!');
+        }else{
+            if(edit){
+                $.ajax({
+                    type: "post",
+                    url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/actions/update_pelanggan/"+username_pelanggan,
+                    data: {
+                        nama,
+                        no_hp
+                    },
+                    beforeSend: function () {
+                    },
+                    success: function (status) {
+                        if(status)
+                        {
+                            alert('Data berhasil diubah!');
+                            window.location.reload();
+                        }
+                    }
+                });
+            }else{
+                $.ajax({
+                    type: "post",
+                    url: "http://frozenbits.tech/foodCashier/index.php/C_Pelanggan/actions/add_pelanggan",
+                    data: {
+                        username_pelanggan,
+                        nama,
+                        no_hp
+                    },
+                    beforeSend: function () {
+                    },
+                    success: function (status) {
+                        if(status)
+                        {
+                            alert('Data berhasil ditambahkan!');
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        }
+      }      
   }
 
   function delUser(username)
@@ -150,7 +158,7 @@ $(function(){
   }
 
 $("#search").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
+    let value = $(this).val().toLowerCase();
     $("#listmember .row").filter(function () {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
